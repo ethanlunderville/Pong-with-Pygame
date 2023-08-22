@@ -64,8 +64,6 @@ class Circ(pygame.sprite.Sprite):
     #Animates the ball
     def collide(self):
         if self.rect.colliderect(player.rect) and self.rect.left>=31 or self.rect.colliderect(robot.rect) and self.rect.right <=969 :
-            # sound
-            impact.play()
             # Changes direction of the ball with a new slope that has some RNG so that
             # the game is not overly deterministic
             self.slope = -self.slope + random.randint(1, self.volatility) * .01
@@ -81,8 +79,6 @@ class Circ(pygame.sprite.Sprite):
         self.yval = self.xval * self.slope
         #if the ball touches either the lower or upper bounds
         if self.rect.y >= SCREEN_HEIGHT or self.rect.y <= 0:
-            # sound
-            impact.play()
             # Changes the trajectory of the ball
             if self.slope > 0:
                 self.slope = -self.slope + random.randint(1,self.volatility)*.01
@@ -105,8 +101,6 @@ class Circ(pygame.sprite.Sprite):
             Player.incrementScore()
             self.slope = .6
             time.sleep(1)
-            # Spawn noise
-            spawn.play()
         elif self.rect.x <= 0:
             self.xval = -self.resval
             self.yval = 0
@@ -115,8 +109,6 @@ class Circ(pygame.sprite.Sprite):
             Robot.incrementScore()
             self.slope = .6
             time.sleep(1)
-            # Spawn noise
-            spawn.play()
         ## Animates the ball based off of the conditions above
         self.rect.x += self.xval
         self.rect.y += -self.yval
@@ -157,11 +149,6 @@ class Robot(Player):
 
 #General
 pygame.init()
-#Sounds
-spawn = mixer.Sound('NewGen.wav')
-spawn.set_volume(SOUND_VOLUME['spawn'])
-impact = mixer.Sound('Impact.wav')
-impact.set_volume(SOUND_VOLUME['impact'])
 #1000, 650
 screen = pygame.display.set_mode((SCREEN_WIDTH,SCREEN_HEIGHT))
 pygame.display.set_caption("PONG")
